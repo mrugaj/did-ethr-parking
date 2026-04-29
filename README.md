@@ -43,7 +43,7 @@ ERC-1056 Registry               0x03d5003bf0e79C5F5223588F347ebA39AfbC3818 (Sepo
 ## Installation
 
 ```bash
-git clone https://github.com/your-org/did-ethr-parking
+git clone https://github.com/mrugaj/did-ethr-parking
 cd did-ethr-parking
 npm install
 ```

@@ -1,19 +1,26 @@
 {
   "name": "did-ethr-parking",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ethereum DID registry for autonomous parking nodes on Sepolia",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node --watch src/index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["did", "ethereum", "web3", "decentralized-identity", "sepolia"],
+  "author": "mrugaj",
+  "license": "MIT",
   "dependencies": {
     "did-resolver": "^4.1.0",
     "dotenv": "^17.4.2",
     "ethers": "^6.16.0",
     "ethr-did": "^3.0.38",
     "ethr-did-resolver": "^11.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
   }
 }
