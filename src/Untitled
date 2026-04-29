@@ -1,0 +1,31 @@
+// src/index.ts
+import 'dotenv/config';
+import { generateIdentity } from './keygen';
+import { buildEthrDID, addServiceEndpoint, delegateKey } from './registry';
+import { resolveDID } from './resolver';
+
+async function main() {
+  const rpcUrl = process.env.SEPOLIA_RPC_URL!;
+  const privateKey = process.env.PRIVATE_KEY!;
+
+  // --- Step 1: Deterministic identity for this parking node
+  // In production, load from secure enclave / HSM; don't re-generate each run.
+  const identity = generateIdentity('sepolia');
+  console.log('\nNode DID:', identity.did);
+
+  const ethrDid = buildEthrDID(privateKey, rpcUrl);
+
+  // --- Step 2a: Register service endpoint (parking node gRPC address)
+  await addServiceEndpoint(ethrDid, 'https://node-14.parking.example.com:9090');
+
+  // --- Step 2b: Delegate a short-lived key for a vehicle (simulated)
+  const vehicleWallet = '0xAbCd1234...';  // vehicle's ephemeral address
+  await delegateKey(ethrDid, vehicleWallet, 'sigAuth', 3600);
+
+  // --- Step 3: Resolve and print the resulting DID Document
+  const didDoc = await resolveDID(identity.did, rpcUrl);
+  console.log('\nResolved DID Document:');
+  console.log(JSON.stringify(didDoc, null, 2));
+}
+
+main().catch(console.error);
